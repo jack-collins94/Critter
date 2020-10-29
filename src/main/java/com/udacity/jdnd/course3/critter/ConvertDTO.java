@@ -1,7 +1,9 @@
-package com.udacity.jdnd.course3.critter.user.service;
+package com.udacity.jdnd.course3.critter;
 
 import com.udacity.jdnd.course3.critter.pet.dto.PetDTO;
 import com.udacity.jdnd.course3.critter.pet.entity.Pet;
+import com.udacity.jdnd.course3.critter.schedule.dto.ScheduleDTO;
+import com.udacity.jdnd.course3.critter.schedule.entity.Schedule;
 import com.udacity.jdnd.course3.critter.user.dto.CustomerDTO;
 import com.udacity.jdnd.course3.critter.user.dto.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.user.entity.Customer;
@@ -46,6 +48,18 @@ public class ConvertDTO {
         Pet pet = new Pet();
         BeanUtils.copyProperties(petDTO, pet);
         return pet;
+    }
+
+    public ScheduleDTO convertEntityToScheduleDTO(Schedule schedule){
+        ScheduleDTO scheduleDTO = new ScheduleDTO();
+        BeanUtils.copyProperties(schedule,scheduleDTO);
+        return scheduleDTO;
+    }
+
+    public Schedule convertScheduleDTOToEntity(ScheduleDTO scheduleDTO){
+        Schedule schedule = new Schedule();
+        BeanUtils.copyProperties(scheduleDTO, schedule);
+        return schedule;
     }
 
 }

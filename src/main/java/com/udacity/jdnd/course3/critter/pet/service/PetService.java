@@ -3,9 +3,8 @@ package com.udacity.jdnd.course3.critter.pet.service;
 import com.udacity.jdnd.course3.critter.pet.dto.PetDTO;
 import com.udacity.jdnd.course3.critter.pet.entity.Pet;
 import com.udacity.jdnd.course3.critter.pet.repository.PetRepository;
-import com.udacity.jdnd.course3.critter.user.entity.Customer;
 import com.udacity.jdnd.course3.critter.user.repository.CustomerRepository;
-import com.udacity.jdnd.course3.critter.user.service.ConvertDTO;
+import com.udacity.jdnd.course3.critter.ConvertDTO;
 import com.udacity.jdnd.course3.critter.user.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,10 +31,11 @@ public class PetService {
 
 
     public PetDTO save(PetDTO petDTO){
-        Pet pet = repository.save(convertDTO.convertPetDTOToEntity(petDTO));
-        customerService.addPetToCustomer(pet, pet.getCustomer());
-        return convertDTO.convertEntityToPetDTO(pet);
-
+        Pet pet = convertDTO.convertPetDTOToEntity(petDTO);
+        pet.setCustomer(customerService.findCustomerById(petDTO.getOwnerId()));
+        Pet savedPet = repository.save(pet);
+        customerService.addPetToCustomer(savedPet, savedPet.getCustomer());
+        return convertDTO.convertEntityToPetDTO(savedPet);
     }
 
     public PetDTO findPetById(Long id){
