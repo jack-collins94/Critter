@@ -2,6 +2,7 @@ package com.udacity.jdnd.course3.critter.user.entity;
 
 
 import com.udacity.jdnd.course3.critter.schedule.entity.Schedule;
+import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
@@ -9,18 +10,38 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-public class Employee extends User{
+@Table(name = "employee")
+public class Employee{
+    @Id
+    @GeneratedValue
+    Long id;
+
+    @Nationalized
+    private String name;
 
     @ElementCollection(targetClass = EmployeeSkill.class)
     private Set<EmployeeSkill> skills;
 
-    @ElementCollection
+    @ElementCollection(targetClass = DayOfWeek.class)
     private Set<DayOfWeek> daysAvailable;
 
-    @ManyToMany
-    private List<Schedule> schedules;
-
     public Employee() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<EmployeeSkill> getSkills() {
@@ -39,11 +60,5 @@ public class Employee extends User{
         this.daysAvailable = daysAvailable;
     }
 
-    public List<Schedule> getSchedules() {
-        return schedules;
-    }
 
-    public void setSchedules(List<Schedule> schedules) {
-        this.schedules = schedules;
-    }
 }

@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name = "pet")
 public class Pet {
     @Id
     @GeneratedValue
@@ -18,18 +19,17 @@ public class Pet {
     @Nationalized
     private String name;
 
-    @NotNull
     private PetType type;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
     private LocalDate birthDate;
+
+    @Column(length = 750)
     private String notes;
 
-    @ManyToMany
-    private List<Schedule> schedules;
 
     public Pet() {
     }
@@ -80,13 +80,5 @@ public class Pet {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public List<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(List<Schedule> schedules) {
-        this.schedules = schedules;
     }
 }

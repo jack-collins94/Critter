@@ -49,7 +49,6 @@ public class CustomerService {
 
     public void addPetToCustomer(Pet pet, Customer customer) {
         List<Pet> pets = customer.getPet();
-
         if(pets == null) {
             pets = new ArrayList<>();
         }

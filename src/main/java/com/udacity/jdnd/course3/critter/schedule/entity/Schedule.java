@@ -10,21 +10,22 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name = "schedule")
 public class Schedule {
 
     @Id
     @GeneratedValue
     Long id;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Pet> pets;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Employee> employees;
 
-    @NotNull
     private LocalDate date;
 
+    @Column
     @ElementCollection(targetClass = EmployeeSkill.class)
     private List<EmployeeSkill> activities;
 

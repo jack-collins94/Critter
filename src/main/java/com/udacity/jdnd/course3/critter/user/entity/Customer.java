@@ -1,23 +1,47 @@
 package com.udacity.jdnd.course3.critter.user.entity;
 
 import com.udacity.jdnd.course3.critter.pet.entity.Pet;
+import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-public class Customer extends User{
+@Table(name = "customer")
+public class Customer{
+    @Id
+    @GeneratedValue
+    Long id;
 
-    @NotNull
+    @Nationalized
+    private String name;
+
     private String phoneNumber;
 
+    @Column(length = 750)
     private String notes;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Pet> pet;
 
     public Customer() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhoneNumber() {

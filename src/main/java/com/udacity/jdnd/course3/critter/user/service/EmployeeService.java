@@ -1,10 +1,13 @@
 package com.udacity.jdnd.course3.critter.user.service;
 
 import com.udacity.jdnd.course3.critter.ConvertDTO;
+import com.udacity.jdnd.course3.critter.schedule.entity.Schedule;
 import com.udacity.jdnd.course3.critter.user.dto.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.user.dto.EmployeeRequestDTO;
 import com.udacity.jdnd.course3.critter.user.entity.Employee;
+import com.udacity.jdnd.course3.critter.user.entity.EmployeeSkill;
 import com.udacity.jdnd.course3.critter.user.repository.EmployeeRepository;
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,16 +41,19 @@ public class EmployeeService {
     }
 
     public List<EmployeeDTO> findEmployeeForService(EmployeeRequestDTO employeeDTO){
-        List<Employee> employees = repository.findDistinctByDaysAvailableAndSkillsIn(
-                employeeDTO.getDate().getDayOfWeek(),
-                employeeDTO.getSkills());
+        DayOfWeek day = employeeDTO.getDate().getDayOfWeek();
+        Set<EmployeeSkill> skills = employeeDTO.getSkills();
+
+        List<Employee> employees = repository.findAll();
 
         List<EmployeeDTO> availableEmployees = new ArrayList<>();
 
         for(Employee employee:employees){
+            if(employee.getDaysAvailable().contains(day) && employee.getSkills().containsAll(skills))
                 availableEmployees.add(convertDTO.convertEntityToEmployeeDTO(employee));
 
         }
         return availableEmployees;
     }
+
 }

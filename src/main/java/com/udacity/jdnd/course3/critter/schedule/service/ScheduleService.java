@@ -2,6 +2,7 @@ package com.udacity.jdnd.course3.critter.schedule.service;
 
 import com.udacity.jdnd.course3.critter.ConvertDTO;
 import com.udacity.jdnd.course3.critter.pet.entity.Pet;
+import com.udacity.jdnd.course3.critter.pet.service.PetService;
 import com.udacity.jdnd.course3.critter.schedule.dto.ScheduleDTO;
 import com.udacity.jdnd.course3.critter.schedule.entity.Schedule;
 import com.udacity.jdnd.course3.critter.schedule.repository.ScheduleRepository;
@@ -23,12 +24,11 @@ public class ScheduleService {
     ConvertDTO convertDTO;
 
     @Autowired
-    CustomerService customerService;
+    PetService petService;
 
     public ScheduleDTO create(ScheduleDTO scheduleDTO){
-        Schedule schedule = convertDTO.convertScheduleDTOToEntity(scheduleDTO);
-        schedule = repository.save(schedule);
-        return convertDTO.convertEntityToScheduleDTO(schedule);
+        return convertDTO.convertEntityToScheduleDTO(repository.save(convertDTO.convertScheduleDTOToEntity(scheduleDTO)));
+
     }
 
     public List<ScheduleDTO> findAll(){
@@ -42,21 +42,19 @@ public class ScheduleService {
         return scheduleDTOS;
     }
 
-    public List<ScheduleDTO> findByPetId(long id){
-        List<Schedule> schedules = repository.findAllByPetsId(id);
+    public List<ScheduleDTO> findByPetId(Long petId){
+        List<Schedule> schedules = repository.findByPets_Id(petId);
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
-
         for(Schedule schedule:schedules){
             scheduleDTOS.add(convertDTO.convertEntityToScheduleDTO(schedule));
         }
+
         return scheduleDTOS;
     }
 
-    public List<ScheduleDTO> findByEmployeeId(long id) {
-        List<Schedule> schedules = repository.findAllByEmployeesId(id);
-
+    public List<ScheduleDTO> findByEmployeeId(Long employeeId) {
+        List<Schedule> schedules = repository.findByEmployees_Id(employeeId);
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
-
         for(Schedule schedule:schedules){
             scheduleDTOS.add(convertDTO.convertEntityToScheduleDTO(schedule));
         }
@@ -64,23 +62,17 @@ public class ScheduleService {
     }
 
     public List<ScheduleDTO> findByCustomerId(long customerId) {
-        Customer customer  = customerService.findCustomerById(customerId);
-        List<Pet> customerPets = customer.getPet();
-        List<Long> petIds = new ArrayList<>();
-        List<Schedule> schedules = new ArrayList<>();
-        List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
-
-        for(Pet pet:customerPets){
-            petIds.add(pet.getId());
+        List<Pet> pets = petService.getPetByCustomerId(customerId);
+        List<ScheduleDTO> schedulesDTO = new ArrayList<>();
+        pets.forEach(pet -> {
+            List<ScheduleDTO> petsSchedulesDTO = findByPetId(pet.getId());
+            schedulesDTO.addAll(petsSchedulesDTO);
+        });
+        for(Pet pet:pets){
+            schedulesDTO.addAll(findByPetId(pet.getId()));
         }
 
-        for (Long id:petIds){
-            schedules.addAll(repository.findAllByPetsId(id));
-        }
-        for(Schedule schedule:schedules){
-            scheduleDTOS.add(convertDTO.convertEntityToScheduleDTO(schedule));
-        }
-        return scheduleDTOS;
+        return schedulesDTO;
 
     }
 

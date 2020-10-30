@@ -17,7 +17,7 @@ public class PetController {
     @Autowired
     PetService petService;
 
-    @PostMapping
+    @PostMapping("/add")
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
         return petService.save(petDTO);
     }
