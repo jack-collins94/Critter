@@ -28,7 +28,7 @@ public class PetController {
     }
 
     @GetMapping
-    public List<PetDTO> getPets(){
+    public List<PetDTO> getPets() {
         return petService.getAllPets();
     }
 

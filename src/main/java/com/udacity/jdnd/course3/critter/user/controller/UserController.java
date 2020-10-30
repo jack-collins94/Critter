@@ -14,7 +14,7 @@ import java.util.Set;
 
 /**
  * Handles web requests related to Users.
- *
+ * <p>
  * Includes requests for both customers and employees. Splitting this into separate user and customer controllers
  * would be fine too, though that is not part of the required scope for this class.
  */
@@ -29,18 +29,18 @@ public class UserController {
 
     //DONE
     @PostMapping("/customer")
-    public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
+    public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
         return customerService.save(customerDTO);
     }
 
     //DONE
     @GetMapping("/customer")
-    public List<CustomerDTO> getAllCustomers(){
+    public List<CustomerDTO> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
     @GetMapping("/customer/pet/{petId}")
-    public CustomerDTO getOwnerByPet(@PathVariable long petId){
+    public CustomerDTO getOwnerByPet(@PathVariable long petId) {
         return customerService.findOwnerByPetId(petId);
     }
 
@@ -48,7 +48,7 @@ public class UserController {
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
 
-       return employeeService.save(employeeDTO);
+        return employeeService.save(employeeDTO);
     }
 
     //DONE

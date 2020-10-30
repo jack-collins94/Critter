@@ -1,11 +1,10 @@
 package com.udacity.jdnd.course3.critter.schedule.entity;
 
-import com.udacity.jdnd.course3.critter.user.entity.Employee;
 import com.udacity.jdnd.course3.critter.pet.entity.Pet;
+import com.udacity.jdnd.course3.critter.user.entity.Employee;
 import com.udacity.jdnd.course3.critter.user.entity.EmployeeSkill;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;

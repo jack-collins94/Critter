@@ -1,13 +1,10 @@
 package com.udacity.jdnd.course3.critter.pet.entity;
 
 import com.udacity.jdnd.course3.critter.user.entity.Customer;
-import com.udacity.jdnd.course3.critter.schedule.entity.Schedule;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "pet")
@@ -29,7 +26,6 @@ public class Pet {
 
     @Column(length = 750)
     private String notes;
-
 
     public Pet() {
     }

@@ -22,34 +22,34 @@ public class CustomerService {
     @Autowired
     ConvertDTO convert;
 
-    public CustomerDTO save(CustomerDTO customerDTO){
+    public CustomerDTO save(CustomerDTO customerDTO) {
         Customer customer = convert.convertCustomerDTOToEntity(customerDTO);
         return convert.convertEntityToCustomerDTO(repository.save(customer));
     }
 
-    public List<CustomerDTO> getAllCustomers(){
+    public List<CustomerDTO> getAllCustomers() {
         List<Customer> customers = repository.findAll();
         List<CustomerDTO> customerDTOS = new ArrayList<>();
 
-        for (Customer customer:customers) {
+        for (Customer customer : customers) {
             customerDTOS.add(convert.convertEntityToCustomerDTO(customer));
         }
 
         return customerDTOS;
     }
 
-    public CustomerDTO findOwnerByPetId(Long id){
+    public CustomerDTO findOwnerByPetId(Long id) {
         Customer customer = repository.findAllByPetId(id);
         return convert.convertEntityToCustomerDTO(customer);
     }
 
-    public Customer findCustomerById(Long id){
+    public Customer findCustomerById(Long id) {
         return repository.getOne(id);
     }
 
     public void addPetToCustomer(Pet pet, Customer customer) {
         List<Pet> pets = customer.getPet();
-        if(pets == null) {
+        if (pets == null) {
             pets = new ArrayList<>();
         }
         pets.add(pet);

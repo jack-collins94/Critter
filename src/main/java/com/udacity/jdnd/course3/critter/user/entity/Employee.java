@@ -1,17 +1,15 @@
 package com.udacity.jdnd.course3.critter.user.entity;
 
 
-import com.udacity.jdnd.course3.critter.schedule.entity.Schedule;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "employee")
-public class Employee{
+public class Employee {
     @Id
     @GeneratedValue
     Long id;

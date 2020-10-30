@@ -6,8 +6,6 @@ import com.udacity.jdnd.course3.critter.pet.service.PetService;
 import com.udacity.jdnd.course3.critter.schedule.dto.ScheduleDTO;
 import com.udacity.jdnd.course3.critter.schedule.entity.Schedule;
 import com.udacity.jdnd.course3.critter.schedule.repository.ScheduleRepository;
-import com.udacity.jdnd.course3.critter.user.entity.Customer;
-import com.udacity.jdnd.course3.critter.user.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,26 +26,26 @@ public class ScheduleService {
     @Autowired
     PetService petService;
 
-    public ScheduleDTO create(ScheduleDTO scheduleDTO){
+    public ScheduleDTO create(ScheduleDTO scheduleDTO) {
         return convertDTO.convertEntityToScheduleDTO(repository.save(convertDTO.convertScheduleDTOToEntity(scheduleDTO)));
 
     }
 
-    public List<ScheduleDTO> findAll(){
+    public List<ScheduleDTO> findAll() {
         List<Schedule> schedules = repository.findAll();
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
 
-        for(Schedule schedule:schedules){
+        for (Schedule schedule : schedules) {
             scheduleDTOS.add(convertDTO.convertEntityToScheduleDTO(schedule));
         }
 
         return scheduleDTOS;
     }
 
-    public List<ScheduleDTO> findByPetId(Long petId){
+    public List<ScheduleDTO> findByPetId(Long petId) {
         List<Schedule> schedules = repository.findByPets_Id(petId);
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
-        for(Schedule schedule:schedules){
+        for (Schedule schedule : schedules) {
             scheduleDTOS.add(convertDTO.convertEntityToScheduleDTO(schedule));
         }
 
@@ -57,7 +55,7 @@ public class ScheduleService {
     public List<ScheduleDTO> findByEmployeeId(Long employeeId) {
         List<Schedule> schedules = repository.findByEmployees_Id(employeeId);
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
-        for(Schedule schedule:schedules){
+        for (Schedule schedule : schedules) {
             scheduleDTOS.add(convertDTO.convertEntityToScheduleDTO(schedule));
         }
         return scheduleDTOS;
@@ -70,12 +68,11 @@ public class ScheduleService {
             List<ScheduleDTO> petsSchedulesDTO = findByPetId(pet.getId());
             schedulesDTO.addAll(petsSchedulesDTO);
         });
-        for(Pet pet:pets){
+
+        for (Pet pet : pets) {
             schedulesDTO.addAll(findByPetId(pet.getId()));
         }
 
         return schedulesDTO;
-
     }
-
 }

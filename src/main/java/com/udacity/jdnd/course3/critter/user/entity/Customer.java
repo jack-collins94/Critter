@@ -4,12 +4,11 @@ import com.udacity.jdnd.course3.critter.pet.entity.Pet;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Table(name = "customer")
-public class Customer{
+public class Customer {
     @Id
     @GeneratedValue
     Long id;

@@ -1,15 +1,11 @@
 package com.udacity.jdnd.course3.critter.pet.service;
 
+import com.udacity.jdnd.course3.critter.ConvertDTO;
 import com.udacity.jdnd.course3.critter.pet.dto.PetDTO;
 import com.udacity.jdnd.course3.critter.pet.entity.Pet;
 import com.udacity.jdnd.course3.critter.pet.repository.PetRepository;
-import com.udacity.jdnd.course3.critter.schedule.entity.Schedule;
-import com.udacity.jdnd.course3.critter.user.entity.Customer;
-import com.udacity.jdnd.course3.critter.user.entity.Employee;
 import com.udacity.jdnd.course3.critter.user.repository.CustomerRepository;
-import com.udacity.jdnd.course3.critter.ConvertDTO;
 import com.udacity.jdnd.course3.critter.user.service.CustomerService;
-import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +29,7 @@ public class PetService {
     @Autowired
     CustomerRepository customerRepository;
 
-
-    public PetDTO save(PetDTO petDTO){
+    public PetDTO save(PetDTO petDTO) {
         Pet pet = convertDTO.convertPetDTOToEntity(petDTO);
         Pet savedPet = repository.save(pet);
         customerService.addPetToCustomer(savedPet, savedPet.getCustomer());
@@ -42,29 +37,29 @@ public class PetService {
         return convertDTO.convertEntityToPetDTO(savedPet);
     }
 
-    public PetDTO findPetById(Long id){
+    public PetDTO findPetById(Long id) {
         return convertDTO.convertEntityToPetDTO(repository.getOne(id));
     }
 
-    public List<PetDTO> getAllPets(){
+    public List<PetDTO> getAllPets() {
         List<Pet> pets = repository.findAll();
         List<PetDTO> petDTOS = new ArrayList<>();
-        for (Pet pet:pets) {
+        for (Pet pet : pets) {
             petDTOS.add(convertDTO.convertEntityToPetDTO(pet));
         }
         return petDTOS;
     }
 
-    public List<PetDTO> getPetByOwnerId(Long id){
+    public List<PetDTO> getPetByOwnerId(Long id) {
         List<Pet> pets = repository.findByCustomer_Id(id);
         List<PetDTO> petDTOS = new ArrayList<>();
-        for(Pet pet: pets){
+        for (Pet pet : pets) {
             petDTOS.add(convertDTO.convertEntityToPetDTO(pet));
         }
         return petDTOS;
     }
 
-    public List<Pet> getPetByCustomerId(Long id){
+    public List<Pet> getPetByCustomerId(Long id) {
         return repository.findByCustomer_Id(id);
     }
 
