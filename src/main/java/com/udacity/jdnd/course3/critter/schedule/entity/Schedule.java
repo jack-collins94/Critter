@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "schedule")
@@ -27,7 +28,7 @@ public class Schedule {
 
     @Column
     @ElementCollection(targetClass = EmployeeSkill.class)
-    private List<EmployeeSkill> activities;
+    private Set<EmployeeSkill> activities;
 
     public Schedule() {
     }
@@ -64,11 +65,11 @@ public class Schedule {
         this.date = date;
     }
 
-    public List<EmployeeSkill> getActivities() {
+    public Set<EmployeeSkill> getActivities() {
         return activities;
     }
 
-    public void setActivities(List<EmployeeSkill> activities) {
+    public void setActivities(Set<EmployeeSkill> activities) {
         this.activities = activities;
     }
 }
